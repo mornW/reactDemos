@@ -44,6 +44,18 @@ export const http = (
 
 export const useHttp = () => {
   const { user } = useAuth();
-  return (...[endpoint, config]: [string, Config]) =>
+  return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token });
 };
+
+// Parameters Omit Partial Exclude
+// about TS
+// type Person = {
+//   name: string,
+//   age: number
+// }
+// const xiaoMing: Partial<Person> = {}
+// const shenMiRen: Omit<Person, 'age' | 'name'> = {}
+// type PersonKeys = keyof Person
+// type PersonOnlyName = Pick<Person,'age'|'name'>
+// type Age = Exclude<PersonKeys,'name'>
