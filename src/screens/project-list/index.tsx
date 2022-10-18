@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { cleanObject, useDebounce, useMount } from "../../utils/util";
 // import qs from "qs";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 
 // const apiURL = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
@@ -25,6 +26,7 @@ export const ProjectListScreen = () => {
     //     setList(await response.json());
     //   }
     // });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceParam]);
 
   useMount(() => {
@@ -37,7 +39,8 @@ export const ProjectListScreen = () => {
   });
 
   return (
-    <div>
+    <Container>
+      <h1>项目列表</h1>
       <SearchPanel
         param={param}
         setParam={setParam}
@@ -45,6 +48,10 @@ export const ProjectListScreen = () => {
       ></SearchPanel>
 
       <List users={users} list={list}></List>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
