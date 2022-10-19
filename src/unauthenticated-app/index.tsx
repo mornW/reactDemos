@@ -6,7 +6,6 @@ import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
-// import {Helmet} from 'react-helmet'
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
@@ -14,9 +13,6 @@ export const UnauthenticatedApp = () => {
 
   return (
     <Container>
-      {/* <Helmet>
-        <title>请登录或注册以继续</title>
-      </Helmet> */}
       <Header />
       <Background />
       <CardShadow>
