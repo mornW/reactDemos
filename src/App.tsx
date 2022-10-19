@@ -1,20 +1,20 @@
 import { useAuth } from "context/auth-context";
 import React from "react";
 import "./App.css";
-// import { ProjectListScreen } from "./screens/project-list";
 // import { TsReactTest } from "./try-use-array";
-// import { LoginScreen } from "./screens/login";
 import { AuthenticatedApp } from "./authenticated-app";
 import { UnauthenticatedApp } from "unauthenticated-app";
+import { FullPageErrorFallback } from "components/lib";
+import { ErrorBoundary } from "components/error-boundary";
 
 function App() {
   const { user } = useAuth();
-  // return <ProjectListScreen />;
   // return <TsReactTest />;
-  // return <LoginScreen />;
   return (
     <div className="App">
-      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      <ErrorBoundary fallbackRender={FullPageErrorFallback}>
+        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      </ErrorBoundary>
     </div>
   );
 }
