@@ -2,23 +2,23 @@ import React from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "unauthenticated-app/index";
-// const apiURL = process.env.REACT_APP_API_URL;
-export const LoginScreen = () => {
+import { useAsync } from "utils/use-async";
+
+export const LoginScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { user, login } = useAuth();
-  // const login = (param: { username: string; password: string }) => {
-  //   fetch(`${apiURL}/login`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(param),
-  //   }).then(async (response) => {
-  //     if (response.ok) {
-  //     }
-  //   });
-  // };
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+    // login(values).catch(err => onError(err));;
+    try {
+      run(login(values));
+    } catch (error: any) {
+      onError(error);
+    }
   };
   return (
     <Form onFinish={handleSubmit}>
@@ -40,7 +40,7 @@ export const LoginScreen = () => {
         <Input placeholder={"密码"} type="password" id={"password"} />
       </Form.Item>
       <Form.Item>
-        <LongButton type={"primary"} htmlType={"submit"}>
+        <LongButton loading={isLoading} type={"primary"} htmlType={"submit"}>
           登录
         </LongButton>
       </Form.Item>
