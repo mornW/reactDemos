@@ -1,26 +1,23 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
-import React, { useState } from "react";
+import React from "react";
 import { useDebounce, useDocumentTitle } from "../../utils/util";
 
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "utils/projects";
 import { useUsers } from "utils/user";
+import { useProjectsSearchParams } from "./util";
 // import { Helmet } from "react-helmet";
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  // const [isLoading,setIsLoading] = useState(false)
-  // const [error,setError] = useState<null | Error>(null)
-  // const [list, setList] = useState([]);
-  // const [users, setUsers] = useState([]);
-  const debounceParam = useDebounce(param, 2000);
+  const [param, setParam] = useProjectsSearchParams();
 
-  const { isLoading, error, data: list } = useProjects(debounceParam);
+  const {
+    isLoading,
+    error,
+    data: list,
+  } = useProjects(useDebounce(param, 2000));
   const { data: users } = useUsers();
   useDocumentTitle("项目列表", false);
 
@@ -46,6 +43,8 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+ProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;
